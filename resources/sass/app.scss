@@ -4,5 +4,22 @@
 // Variables
 @import 'variables';
 
+$link-color: $gray-900;
+
+.primary {
+    fill: $gray-500;
+}
+
+.secondary {
+    fill: $gray-700;
+}
+
+[v-cloak] {
+    display: none;
+}
+
 // Bootstrap
-@import '~bootstrap/scss/bootstrap';
+@import '~bootstrap/scss/functions';
+@import '~bootstrap/scss/variables';
+@import '~bootstrap/scss/mixins';
+@import '~bootstrap';

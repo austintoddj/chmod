@@ -4,13 +4,14 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Laravel</title>
+        <title>{{ config('app.name') }}</title>
 
         <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     </head>
-    <body>
+    <body class="bg-light">
         <div id="app">
-            <example-component></example-component>
+            <bits-calculator></bits-calculator>
+            <result-notation></result-notation>
         </div>
 
         <script src="{{ asset('/js/app.js') }}"></script>

@@ -1,10 +1,8 @@
 <template>
-    <div class="container">
+    <div class="container mt-5">
         <div class="row justify-content-center">
             <div class="col-md-8">
-                <div class="card">
-                    <div class="card-header">chmod</div>
-
+                <div class="card shadow my-auto">
                     <div class="card-body">
                         I'm an example component.
                     </div>
@@ -16,8 +14,10 @@
 
 <script>
     export default {
+        name: 'bits-calculator',
+
         mounted() {
-            console.log('Component mounted.')
+            console.log('Calculator mounted.')
         }
     }
 </script>
