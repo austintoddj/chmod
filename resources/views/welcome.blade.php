@@ -10,8 +10,7 @@
     </head>
     <body class="bg-light">
         <div id="app">
-            <bits-calculator></bits-calculator>
-            <result-notation></result-notation>
+            <router-view></router-view>
         </div>
 
         <script src="{{ asset('/js/app.js') }}"></script>

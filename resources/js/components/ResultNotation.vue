@@ -2,7 +2,7 @@
     <div class="container mt-5">
         <div class="row justify-content-center">
             <div class="col-md-8 text-center">
-                <code>chmod options permissions <em>filename</em></code>
+                <code>chmod options {{ permissions }} <em>filename</em></code>
             </div>
         </div>
     </div>
@@ -12,8 +12,17 @@
     export default {
         name: 'result-notation',
 
-        mounted() {
-            console.log('Results mounted.')
+        props: {
+            permissions: {
+                type: String,
+                required: true
+            }
+        },
+
+        data() {
+            return {
+                //
+            }
         }
     }
 </script>
