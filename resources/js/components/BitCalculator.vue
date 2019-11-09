@@ -12,7 +12,7 @@
                                     <p class="text-muted text-uppercase font-weight-bold small">
                                         User
 
-                                        <a href="#" v-tooltip="{ placement: 'bottom' }" class="text-decoration-none" title="A user is the owner of the file">
+                                        <a href="#" v-tooltip="{ placement: 'bottom' }" class="text-decoration-none" title="The user who owns the file">
                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="17" class="icon-information">
                                                 <path class="primary" d="M12 2a10 10 0 1 1 0 20 10 10 0 0 1 0-20z"/>
                                                 <path style="fill:white" d="M11 12a1 1 0 0 1 0-2h2a1 1 0 0 1 .96 1.27L12.33 17H13a1 1 0 0 1 0 2h-2a1 1 0 0 1-.96-1.27L11.67 12H11zm2-4a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/>
@@ -24,7 +24,7 @@
                                     <p class="text-muted text-uppercase font-weight-bold small">
                                         Group
 
-                                        <a href="#" v-tooltip="{ placement: 'bottom' }" class="text-decoration-none" title="A user-group can contain multiple users">
+                                        <a href="#" v-tooltip="{ placement: 'bottom' }" class="text-decoration-none" title="The group to which the user belongs">
                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="17" class="icon-information">
                                                 <path class="primary" d="M12 2a10 10 0 1 1 0 20 10 10 0 0 1 0-20z"/>
                                                 <path style="fill:white" d="M11 12a1 1 0 0 1 0-2h2a1 1 0 0 1 .96 1.27L12.33 17H13a1 1 0 0 1 0 2h-2a1 1 0 0 1-.96-1.27L11.67 12H11zm2-4a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/>
@@ -35,7 +35,7 @@
                                 <th class="text-center" scope="col">
                                     <p class="text-muted text-uppercase font-weight-bold small">
                                         Other
-                                        <a href="#" v-tooltip="{ placement: 'bottom' }" class="text-decoration-none" title="Any other user who has access to a file">
+                                        <a href="#" v-tooltip="{ placement: 'bottom' }" class="text-decoration-none" title="Any other user who has access to the file">
                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="17" class="icon-information">
                                                 <path class="primary" d="M12 2a10 10 0 1 1 0 20 10 10 0 0 1 0-20z"/>
                                                 <path style="fill:white" d="M11 12a1 1 0 0 1 0-2h2a1 1 0 0 1 .96 1.27L12.33 17H13a1 1 0 0 1 0 2h-2a1 1 0 0 1-.96-1.27L11.67 12H11zm2-4a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/>
@@ -138,8 +138,12 @@
                             </tr>
                             </tbody>
                         </table>
-
-                        <p class="text-center lead text-muted">{{ permissionString }}</p>
+                    </div>
+                    <div class="card-footer border-0">
+                        <div class="d-flex justify-content-between">
+                            <p class="text-muted mb-0 px-3">{{ permissionAsString }}</p>
+                            <p class="text-muted mb-0 px-3">{{ permissionAsOctal }}</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -175,12 +179,17 @@
                         write: false,
                         execute: true,
                     },
+                },
+                rules: {
+                    read: 4,
+                    write: 2,
+                    execute: 1,
                 }
             }
         },
 
         computed: {
-            permissionString() {
+            permissionAsString() {
                 return '-' +
                     (this.components.user.read ? 'r' : '-') +
                     (this.components.user.write ? 'w' : '-') +
@@ -191,6 +200,38 @@
                     (this.components.other.read ? 'r' : '-') +
                     (this.components.other.write ? 'w' : '-') +
                     (this.components.other.execute ? 'x' : '-');
+            },
+
+            permissionAsOctal() {
+                return this.calculateUserOctal() +
+                    this.calculateGroupOctal() +
+                    this.calculateOtherOctal();
+            }
+        },
+
+        methods: {
+            calculateUserOctal() {
+                return String(
+                    (this.components.user.read === true ? this.rules.read : 0) +
+                    (this.components.user.write === true ? this.rules.write : 0) +
+                    (this.components.user.execute === true ? this.rules.execute : 0)
+                );
+            },
+
+            calculateGroupOctal() {
+                return String(
+                    (this.components.group.read === true ? this.rules.read : 0) +
+                    (this.components.group.write === true ? this.rules.write : 0) +
+                    (this.components.group.execute === true ? this.rules.execute : 0)
+                );
+            },
+
+            calculateOtherOctal() {
+                return String(
+                    (this.components.other.read === true ? this.rules.read : 0) +
+                    (this.components.other.write === true ? this.rules.write : 0) +
+                    (this.components.other.execute === true ? this.rules.execute : 0)
+                );
             }
         }
     }
