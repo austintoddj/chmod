@@ -7,6 +7,9 @@
         <title>{{ config('app.name') }}</title>
 
         <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+
+        <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.16.2/build/styles/default.min.css">
+        <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.16.2/build/highlight.min.js"></script>
     </head>
     <body class="bg-light">
         <div id="app">
@@ -14,5 +17,6 @@
         </div>
 
         <script src="{{ asset('/js/app.js') }}"></script>
+        <script>hljs.initHighlightingOnLoad()</script>
     </body>
 </html>

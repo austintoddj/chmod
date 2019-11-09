@@ -1,25 +1,25 @@
 <template>
     <div v-cloak>
         <bit-calculator></bit-calculator>
-        <result-notation :permissions="permissions"></result-notation>
+        <command-component :octal="absoluteNotation"></command-component>
     </div>
 </template>
 
 <script>
     import BitCalculator from "../components/BitCalculator";
-    import ResultNotation from "../components/ResultNotation";
+    import CommandComponent from "../components/CommandComponent";
 
     export default {
         name: 'app',
 
         components: {
             BitCalculator,
-            ResultNotation
+            CommandComponent
         },
 
         data() {
             return {
-                permissions: 'whatever'
+                absoluteNotation: 'whatevs'
             }
         },
 

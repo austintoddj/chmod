@@ -2,7 +2,9 @@
     <div class="container mt-5">
         <div class="row justify-content-center">
             <div class="col-md-8 text-center">
-                <code>chmod options {{ permissions }} <em>filename</em></code>
+                <pre>
+                    <code class="rounded bash">chmod <em>options</em> {{ octal }} <em>filename</em></code>
+                </pre>
             </div>
         </div>
     </div>
@@ -10,10 +12,10 @@
 
 <script>
     export default {
-        name: 'result-notation',
+        name: 'command-component',
 
         props: {
-            permissions: {
+            octal: {
                 type: String,
                 required: true
             }

@@ -180,23 +180,111 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'bit-calculator',
   directives: {
     Tooltip: _directives_Tooltip__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
-  mounted: function mounted() {
-    console.log('Calculator mounted.');
+  data: function data() {
+    return {
+      components: {
+        user: {
+          read: true,
+          write: true,
+          execute: true
+        },
+        group: {
+          read: true,
+          write: false,
+          execute: true
+        },
+        other: {
+          read: true,
+          write: false,
+          execute: true
+        }
+      }
+    };
+  },
+  computed: {
+    permissionString: function permissionString() {
+      return '-' + (this.components.user.read ? 'r' : '-') + (this.components.user.write ? 'w' : '-') + (this.components.user.execute ? 'x' : '-') + (this.components.group.read ? 'r' : '-') + (this.components.group.write ? 'w' : '-') + (this.components.group.execute ? 'x' : '-') + (this.components.other.read ? 'r' : '-') + (this.components.other.write ? 'w' : '-') + (this.components.other.execute ? 'x' : '-');
+    }
   }
 });
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ResultNotation.vue?vue&type=script&lang=js&":
-/*!*************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ResultNotation.vue?vue&type=script&lang=js& ***!
-  \*************************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/CommandComponent.vue?vue&type=script&lang=js&":
+/*!***************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/CommandComponent.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -212,10 +300,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: 'result-notation',
+  name: 'command-component',
   props: {
-    permissions: {
+    octal: {
       type: String,
       required: true
     }
@@ -238,7 +328,7 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_BitCalculator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../components/BitCalculator */ "./resources/js/components/BitCalculator.vue");
-/* harmony import */ var _components_ResultNotation__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/ResultNotation */ "./resources/js/components/ResultNotation.vue");
+/* harmony import */ var _components_CommandComponent__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/CommandComponent */ "./resources/js/components/CommandComponent.vue");
 //
 //
 //
@@ -252,11 +342,11 @@ __webpack_require__.r(__webpack_exports__);
   name: 'app',
   components: {
     BitCalculator: _components_BitCalculator__WEBPACK_IMPORTED_MODULE_0__["default"],
-    ResultNotation: _components_ResultNotation__WEBPACK_IMPORTED_MODULE_1__["default"]
+    CommandComponent: _components_CommandComponent__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
   data: function data() {
     return {
-      permissions: 'whatever'
+      absoluteNotation: 'whatevs'
     };
   },
   computed: {//
@@ -18493,6 +18583,7 @@ var render = function() {
                                         "M12 2a10 10 0 1 1 0 20 10 10 0 0 1 0-20z"
                                     }
                                   }),
+                                  _vm._v(" "),
                                   _c("path", {
                                     staticStyle: { fill: "white" },
                                     attrs: {
@@ -18559,6 +18650,7 @@ var render = function() {
                                         "M12 2a10 10 0 1 1 0 20 10 10 0 0 1 0-20z"
                                     }
                                   }),
+                                  _vm._v(" "),
                                   _c("path", {
                                     staticStyle: { fill: "white" },
                                     attrs: {
@@ -18625,6 +18717,7 @@ var render = function() {
                                         "M12 2a10 10 0 1 1 0 20 10 10 0 0 1 0-20z"
                                     }
                                   }),
+                                  _vm._v(" "),
                                   _c("path", {
                                     staticStyle: { fill: "white" },
                                     attrs: {
@@ -18643,7 +18736,500 @@ var render = function() {
                 ])
               ]),
               _vm._v(" "),
-              _vm._m(0)
+              _c("tbody", [
+                _c("tr", [
+                  _c("th", { attrs: { scope: "row" } }, [_vm._v("Read")]),
+                  _vm._v(" "),
+                  _c("td", { staticClass: "text-center" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.components.user.read,
+                          expression: "components.user.read"
+                        }
+                      ],
+                      ref: "userRead",
+                      staticClass: "form-check-input position-relative ml-0",
+                      attrs: {
+                        id: "userRead",
+                        type: "checkbox",
+                        "aria-label": "User read"
+                      },
+                      domProps: {
+                        checked: Array.isArray(_vm.components.user.read)
+                          ? _vm._i(_vm.components.user.read, null) > -1
+                          : _vm.components.user.read
+                      },
+                      on: {
+                        change: function($event) {
+                          var $$a = _vm.components.user.read,
+                            $$el = $event.target,
+                            $$c = $$el.checked ? true : false
+                          if (Array.isArray($$a)) {
+                            var $$v = null,
+                              $$i = _vm._i($$a, $$v)
+                            if ($$el.checked) {
+                              $$i < 0 &&
+                                _vm.$set(
+                                  _vm.components.user,
+                                  "read",
+                                  $$a.concat([$$v])
+                                )
+                            } else {
+                              $$i > -1 &&
+                                _vm.$set(
+                                  _vm.components.user,
+                                  "read",
+                                  $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                                )
+                            }
+                          } else {
+                            _vm.$set(_vm.components.user, "read", $$c)
+                          }
+                        }
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("td", { staticClass: "text-center" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.components.group.read,
+                          expression: "components.group.read"
+                        }
+                      ],
+                      ref: "groupRead",
+                      staticClass: "form-check-input position-relative ml-0",
+                      attrs: {
+                        id: "groupRead",
+                        type: "checkbox",
+                        "aria-label": "Group read"
+                      },
+                      domProps: {
+                        checked: Array.isArray(_vm.components.group.read)
+                          ? _vm._i(_vm.components.group.read, null) > -1
+                          : _vm.components.group.read
+                      },
+                      on: {
+                        change: function($event) {
+                          var $$a = _vm.components.group.read,
+                            $$el = $event.target,
+                            $$c = $$el.checked ? true : false
+                          if (Array.isArray($$a)) {
+                            var $$v = null,
+                              $$i = _vm._i($$a, $$v)
+                            if ($$el.checked) {
+                              $$i < 0 &&
+                                _vm.$set(
+                                  _vm.components.group,
+                                  "read",
+                                  $$a.concat([$$v])
+                                )
+                            } else {
+                              $$i > -1 &&
+                                _vm.$set(
+                                  _vm.components.group,
+                                  "read",
+                                  $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                                )
+                            }
+                          } else {
+                            _vm.$set(_vm.components.group, "read", $$c)
+                          }
+                        }
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("td", { staticClass: "text-center" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.components.other.read,
+                          expression: "components.other.read"
+                        }
+                      ],
+                      ref: "otherRead",
+                      staticClass: "form-check-input position-relative ml-0",
+                      attrs: {
+                        id: "otherRead",
+                        type: "checkbox",
+                        "aria-label": "Other read"
+                      },
+                      domProps: {
+                        checked: Array.isArray(_vm.components.other.read)
+                          ? _vm._i(_vm.components.other.read, null) > -1
+                          : _vm.components.other.read
+                      },
+                      on: {
+                        change: function($event) {
+                          var $$a = _vm.components.other.read,
+                            $$el = $event.target,
+                            $$c = $$el.checked ? true : false
+                          if (Array.isArray($$a)) {
+                            var $$v = null,
+                              $$i = _vm._i($$a, $$v)
+                            if ($$el.checked) {
+                              $$i < 0 &&
+                                _vm.$set(
+                                  _vm.components.other,
+                                  "read",
+                                  $$a.concat([$$v])
+                                )
+                            } else {
+                              $$i > -1 &&
+                                _vm.$set(
+                                  _vm.components.other,
+                                  "read",
+                                  $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                                )
+                            }
+                          } else {
+                            _vm.$set(_vm.components.other, "read", $$c)
+                          }
+                        }
+                      }
+                    })
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("tr", [
+                  _c("th", { attrs: { scope: "row" } }, [_vm._v("Write")]),
+                  _vm._v(" "),
+                  _c("td", { staticClass: "text-center" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.components.user.write,
+                          expression: "components.user.write"
+                        }
+                      ],
+                      ref: "userWrite",
+                      staticClass: "form-check-input position-relative ml-0",
+                      attrs: {
+                        id: "userWrite",
+                        type: "checkbox",
+                        "aria-label": "User write"
+                      },
+                      domProps: {
+                        checked: Array.isArray(_vm.components.user.write)
+                          ? _vm._i(_vm.components.user.write, null) > -1
+                          : _vm.components.user.write
+                      },
+                      on: {
+                        change: function($event) {
+                          var $$a = _vm.components.user.write,
+                            $$el = $event.target,
+                            $$c = $$el.checked ? true : false
+                          if (Array.isArray($$a)) {
+                            var $$v = null,
+                              $$i = _vm._i($$a, $$v)
+                            if ($$el.checked) {
+                              $$i < 0 &&
+                                _vm.$set(
+                                  _vm.components.user,
+                                  "write",
+                                  $$a.concat([$$v])
+                                )
+                            } else {
+                              $$i > -1 &&
+                                _vm.$set(
+                                  _vm.components.user,
+                                  "write",
+                                  $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                                )
+                            }
+                          } else {
+                            _vm.$set(_vm.components.user, "write", $$c)
+                          }
+                        }
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("td", { staticClass: "text-center" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.components.group.write,
+                          expression: "components.group.write"
+                        }
+                      ],
+                      ref: "groupWrite",
+                      staticClass: "form-check-input position-relative ml-0",
+                      attrs: {
+                        id: "groupWrite",
+                        type: "checkbox",
+                        "aria-label": "Group write"
+                      },
+                      domProps: {
+                        checked: Array.isArray(_vm.components.group.write)
+                          ? _vm._i(_vm.components.group.write, null) > -1
+                          : _vm.components.group.write
+                      },
+                      on: {
+                        change: function($event) {
+                          var $$a = _vm.components.group.write,
+                            $$el = $event.target,
+                            $$c = $$el.checked ? true : false
+                          if (Array.isArray($$a)) {
+                            var $$v = null,
+                              $$i = _vm._i($$a, $$v)
+                            if ($$el.checked) {
+                              $$i < 0 &&
+                                _vm.$set(
+                                  _vm.components.group,
+                                  "write",
+                                  $$a.concat([$$v])
+                                )
+                            } else {
+                              $$i > -1 &&
+                                _vm.$set(
+                                  _vm.components.group,
+                                  "write",
+                                  $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                                )
+                            }
+                          } else {
+                            _vm.$set(_vm.components.group, "write", $$c)
+                          }
+                        }
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("td", { staticClass: "text-center" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.components.other.write,
+                          expression: "components.other.write"
+                        }
+                      ],
+                      ref: "otherWrite",
+                      staticClass: "form-check-input position-relative ml-0",
+                      attrs: {
+                        id: "otherWrite",
+                        type: "checkbox",
+                        "aria-label": "Other write"
+                      },
+                      domProps: {
+                        checked: Array.isArray(_vm.components.other.write)
+                          ? _vm._i(_vm.components.other.write, null) > -1
+                          : _vm.components.other.write
+                      },
+                      on: {
+                        change: function($event) {
+                          var $$a = _vm.components.other.write,
+                            $$el = $event.target,
+                            $$c = $$el.checked ? true : false
+                          if (Array.isArray($$a)) {
+                            var $$v = null,
+                              $$i = _vm._i($$a, $$v)
+                            if ($$el.checked) {
+                              $$i < 0 &&
+                                _vm.$set(
+                                  _vm.components.other,
+                                  "write",
+                                  $$a.concat([$$v])
+                                )
+                            } else {
+                              $$i > -1 &&
+                                _vm.$set(
+                                  _vm.components.other,
+                                  "write",
+                                  $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                                )
+                            }
+                          } else {
+                            _vm.$set(_vm.components.other, "write", $$c)
+                          }
+                        }
+                      }
+                    })
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("tr", [
+                  _c("th", { attrs: { scope: "row" } }, [_vm._v("Execute")]),
+                  _vm._v(" "),
+                  _c("td", { staticClass: "text-center" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.components.user.execute,
+                          expression: "components.user.execute"
+                        }
+                      ],
+                      ref: "userExecute",
+                      staticClass: "form-check-input position-relative ml-0",
+                      attrs: {
+                        id: "userExecute",
+                        type: "checkbox",
+                        "aria-label": "User execute"
+                      },
+                      domProps: {
+                        checked: Array.isArray(_vm.components.user.execute)
+                          ? _vm._i(_vm.components.user.execute, null) > -1
+                          : _vm.components.user.execute
+                      },
+                      on: {
+                        change: function($event) {
+                          var $$a = _vm.components.user.execute,
+                            $$el = $event.target,
+                            $$c = $$el.checked ? true : false
+                          if (Array.isArray($$a)) {
+                            var $$v = null,
+                              $$i = _vm._i($$a, $$v)
+                            if ($$el.checked) {
+                              $$i < 0 &&
+                                _vm.$set(
+                                  _vm.components.user,
+                                  "execute",
+                                  $$a.concat([$$v])
+                                )
+                            } else {
+                              $$i > -1 &&
+                                _vm.$set(
+                                  _vm.components.user,
+                                  "execute",
+                                  $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                                )
+                            }
+                          } else {
+                            _vm.$set(_vm.components.user, "execute", $$c)
+                          }
+                        }
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("td", { staticClass: "text-center" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.components.group.execute,
+                          expression: "components.group.execute"
+                        }
+                      ],
+                      ref: "groupExecute",
+                      staticClass: "form-check-input position-relative ml-0",
+                      attrs: {
+                        id: "groupExecute",
+                        type: "checkbox",
+                        "aria-label": "Group execute"
+                      },
+                      domProps: {
+                        checked: Array.isArray(_vm.components.group.execute)
+                          ? _vm._i(_vm.components.group.execute, null) > -1
+                          : _vm.components.group.execute
+                      },
+                      on: {
+                        change: function($event) {
+                          var $$a = _vm.components.group.execute,
+                            $$el = $event.target,
+                            $$c = $$el.checked ? true : false
+                          if (Array.isArray($$a)) {
+                            var $$v = null,
+                              $$i = _vm._i($$a, $$v)
+                            if ($$el.checked) {
+                              $$i < 0 &&
+                                _vm.$set(
+                                  _vm.components.group,
+                                  "execute",
+                                  $$a.concat([$$v])
+                                )
+                            } else {
+                              $$i > -1 &&
+                                _vm.$set(
+                                  _vm.components.group,
+                                  "execute",
+                                  $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                                )
+                            }
+                          } else {
+                            _vm.$set(_vm.components.group, "execute", $$c)
+                          }
+                        }
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("td", { staticClass: "text-center" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.components.other.execute,
+                          expression: "components.other.execute"
+                        }
+                      ],
+                      ref: "otherExecute",
+                      staticClass: "form-check-input position-relative ml-0",
+                      attrs: {
+                        id: "otherExecute",
+                        type: "checkbox",
+                        "aria-label": "Other execute"
+                      },
+                      domProps: {
+                        checked: Array.isArray(_vm.components.other.execute)
+                          ? _vm._i(_vm.components.other.execute, null) > -1
+                          : _vm.components.other.execute
+                      },
+                      on: {
+                        change: function($event) {
+                          var $$a = _vm.components.other.execute,
+                            $$el = $event.target,
+                            $$c = $$el.checked ? true : false
+                          if (Array.isArray($$a)) {
+                            var $$v = null,
+                              $$i = _vm._i($$a, $$v)
+                            if ($$el.checked) {
+                              $$i < 0 &&
+                                _vm.$set(
+                                  _vm.components.other,
+                                  "execute",
+                                  $$a.concat([$$v])
+                                )
+                            } else {
+                              $$i > -1 &&
+                                _vm.$set(
+                                  _vm.components.other,
+                                  "execute",
+                                  $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                                )
+                            }
+                          } else {
+                            _vm.$set(_vm.components.other, "execute", $$c)
+                          }
+                        }
+                      }
+                    })
+                  ])
+                ])
+              ])
+            ]),
+            _vm._v(" "),
+            _c("p", { staticClass: "text-center lead text-muted" }, [
+              _vm._v(_vm._s(_vm.permissionString))
             ])
           ])
         ])
@@ -18651,99 +19237,17 @@ var render = function() {
     ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("tbody", [
-      _c("tr", [
-        _c("th", { attrs: { scope: "row" } }, [_vm._v("Read")]),
-        _vm._v(" "),
-        _c("td", { staticClass: "text-center" }, [
-          _c("input", {
-            staticClass: "form-check-input position-relative ml-0",
-            attrs: { type: "checkbox", value: "", id: "" }
-          })
-        ]),
-        _vm._v(" "),
-        _c("td", { staticClass: "text-center" }, [
-          _c("input", {
-            staticClass: "form-check-input position-relative ml-0",
-            attrs: { type: "checkbox", value: "", id: "" }
-          })
-        ]),
-        _vm._v(" "),
-        _c("td", { staticClass: "text-center" }, [
-          _c("input", {
-            staticClass: "form-check-input position-relative ml-0",
-            attrs: { type: "checkbox", value: "", id: "" }
-          })
-        ])
-      ]),
-      _vm._v(" "),
-      _c("tr", [
-        _c("th", { attrs: { scope: "row" } }, [_vm._v("Write")]),
-        _vm._v(" "),
-        _c("td", { staticClass: "text-center" }, [
-          _c("input", {
-            staticClass: "form-check-input position-relative ml-0",
-            attrs: { type: "checkbox", value: "", id: "" }
-          })
-        ]),
-        _vm._v(" "),
-        _c("td", { staticClass: "text-center" }, [
-          _c("input", {
-            staticClass: "form-check-input position-relative ml-0",
-            attrs: { type: "checkbox", value: "", id: "" }
-          })
-        ]),
-        _vm._v(" "),
-        _c("td", { staticClass: "text-center" }, [
-          _c("input", {
-            staticClass: "form-check-input position-relative ml-0",
-            attrs: { type: "checkbox", value: "", id: "" }
-          })
-        ])
-      ]),
-      _vm._v(" "),
-      _c("tr", [
-        _c("th", { attrs: { scope: "row" } }, [_vm._v("Execute")]),
-        _vm._v(" "),
-        _c("td", { staticClass: "text-center" }, [
-          _c("input", {
-            staticClass: "form-check-input position-relative ml-0",
-            attrs: { type: "checkbox", value: "", id: "" }
-          })
-        ]),
-        _vm._v(" "),
-        _c("td", { staticClass: "text-center" }, [
-          _c("input", {
-            staticClass: "form-check-input position-relative ml-0",
-            attrs: { type: "checkbox", value: "", id: "" }
-          })
-        ]),
-        _vm._v(" "),
-        _c("td", { staticClass: "text-center" }, [
-          _c("input", {
-            staticClass: "form-check-input position-relative ml-0",
-            attrs: { type: "checkbox", value: "", id: "" }
-          })
-        ])
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ResultNotation.vue?vue&type=template&id=d820622c&scoped=true&":
-/*!*****************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ResultNotation.vue?vue&type=template&id=d820622c&scoped=true& ***!
-  \*****************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/CommandComponent.vue?vue&type=template&id=1efea946&scoped=true&":
+/*!*******************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/CommandComponent.vue?vue&type=template&id=1efea946&scoped=true& ***!
+  \*******************************************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -18758,9 +19262,15 @@ var render = function() {
   return _c("div", { staticClass: "container mt-5" }, [
     _c("div", { staticClass: "row justify-content-center" }, [
       _c("div", { staticClass: "col-md-8 text-center" }, [
-        _c("code", [
-          _vm._v("chmod options " + _vm._s(_vm.permissions) + " "),
-          _c("em", [_vm._v("filename")])
+        _c("pre", [
+          _vm._v("                "),
+          _c("code", { staticClass: "rounded bash" }, [
+            _vm._v("chmod "),
+            _c("em", [_vm._v("options")]),
+            _vm._v(" " + _vm._s(_vm.octal) + " "),
+            _c("em", [_vm._v("filename")])
+          ]),
+          _vm._v("\n            ")
         ])
       ])
     ])
@@ -18794,7 +19304,7 @@ var render = function() {
     [
       _c("bit-calculator"),
       _vm._v(" "),
-      _c("result-notation", { attrs: { permissions: _vm.permissions } })
+      _c("command-component", { attrs: { octal: _vm.absoluteNotation } })
     ],
     1
   )
@@ -33927,17 +34437,17 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/ResultNotation.vue":
-/*!****************************************************!*\
-  !*** ./resources/js/components/ResultNotation.vue ***!
-  \****************************************************/
+/***/ "./resources/js/components/CommandComponent.vue":
+/*!******************************************************!*\
+  !*** ./resources/js/components/CommandComponent.vue ***!
+  \******************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _ResultNotation_vue_vue_type_template_id_d820622c_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ResultNotation.vue?vue&type=template&id=d820622c&scoped=true& */ "./resources/js/components/ResultNotation.vue?vue&type=template&id=d820622c&scoped=true&");
-/* harmony import */ var _ResultNotation_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ResultNotation.vue?vue&type=script&lang=js& */ "./resources/js/components/ResultNotation.vue?vue&type=script&lang=js&");
+/* harmony import */ var _CommandComponent_vue_vue_type_template_id_1efea946_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CommandComponent.vue?vue&type=template&id=1efea946&scoped=true& */ "./resources/js/components/CommandComponent.vue?vue&type=template&id=1efea946&scoped=true&");
+/* harmony import */ var _CommandComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CommandComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/CommandComponent.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -33947,50 +34457,50 @@ __webpack_require__.r(__webpack_exports__);
 /* normalize component */
 
 var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _ResultNotation_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _ResultNotation_vue_vue_type_template_id_d820622c_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _ResultNotation_vue_vue_type_template_id_d820622c_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  _CommandComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _CommandComponent_vue_vue_type_template_id_1efea946_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _CommandComponent_vue_vue_type_template_id_1efea946_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
   null,
-  "d820622c",
+  "1efea946",
   null
   
 )
 
 /* hot reload */
 if (false) { var api; }
-component.options.__file = "resources/js/components/ResultNotation.vue"
+component.options.__file = "resources/js/components/CommandComponent.vue"
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
 
 /***/ }),
 
-/***/ "./resources/js/components/ResultNotation.vue?vue&type=script&lang=js&":
-/*!*****************************************************************************!*\
-  !*** ./resources/js/components/ResultNotation.vue?vue&type=script&lang=js& ***!
-  \*****************************************************************************/
+/***/ "./resources/js/components/CommandComponent.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************!*\
+  !*** ./resources/js/components/CommandComponent.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ResultNotation_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./ResultNotation.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ResultNotation.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ResultNotation_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CommandComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./CommandComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/CommandComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CommandComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
-/***/ "./resources/js/components/ResultNotation.vue?vue&type=template&id=d820622c&scoped=true&":
-/*!***********************************************************************************************!*\
-  !*** ./resources/js/components/ResultNotation.vue?vue&type=template&id=d820622c&scoped=true& ***!
-  \***********************************************************************************************/
+/***/ "./resources/js/components/CommandComponent.vue?vue&type=template&id=1efea946&scoped=true&":
+/*!*************************************************************************************************!*\
+  !*** ./resources/js/components/CommandComponent.vue?vue&type=template&id=1efea946&scoped=true& ***!
+  \*************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ResultNotation_vue_vue_type_template_id_d820622c_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./ResultNotation.vue?vue&type=template&id=d820622c&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ResultNotation.vue?vue&type=template&id=d820622c&scoped=true&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ResultNotation_vue_vue_type_template_id_d820622c_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CommandComponent_vue_vue_type_template_id_1efea946_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./CommandComponent.vue?vue&type=template&id=1efea946&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/CommandComponent.vue?vue&type=template&id=1efea946&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CommandComponent_vue_vue_type_template_id_1efea946_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ResultNotation_vue_vue_type_template_id_d820622c_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CommandComponent_vue_vue_type_template_id_1efea946_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
