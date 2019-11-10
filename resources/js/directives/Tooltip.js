@@ -17,7 +17,7 @@ import $ from "jquery";
  * <i class="fas fa-question-circle" :title="myDynamicValue" v-tooltip></i>
  * ```
  *
- * You can also pass Tipsy options to the `v-tooltip` directive, and they'll override
+ * You can also pass Bootstrap options to the `v-tooltip` directive, and they'll override
  * the default options. For example, you can change the tooltip to align on the right
  * side of the element (versus above it) like this:
  *

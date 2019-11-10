@@ -21,6 +21,5 @@
         </div>
 
         <script src="{{ asset('/js/app.js') }}"></script>
-        <script>hljs.initHighlightingOnLoad()</script>
     </body>
 </html>

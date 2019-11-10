@@ -141,8 +141,10 @@
                     </div>
                     <div class="card-footer border-0">
                         <div class="d-flex justify-content-between">
-                            <p class="text-muted mb-0 px-3">{{ permissionAsString }}</p>
-                            <p class="text-muted mb-0 px-3">{{ permissionAsOctal }}</p>
+                            <a href="#" v-tooltip="{ placement: 'bottom' }" class="text-decoration-none" :data-original-title="permissionAsHumanReadable">
+                                <p class="mb-0 px-3" :class="'text-'+permissionStrength">{{ permissionAsString }}</p>
+                            </a>
+                            <p class="text-muted mb-0 px-3">chmod {{ permissionAsOctal }} <em>filename</em></p>
                         </div>
                     </div>
                 </div>
@@ -206,6 +208,14 @@
                 return this.calculateUserOctal() +
                     this.calculateGroupOctal() +
                     this.calculateOtherOctal();
+            },
+
+            permissionAsHumanReadable() {
+                return this.humanReadablePermissionsLevel(this.permissionAsOctal);
+            },
+
+            permissionStrength() {
+                return this.calculatePermissionStrength(this.permissionAsOctal);
             }
         },
 
@@ -232,6 +242,62 @@
                     (this.components.other.write === true ? this.rules.write : 0) +
                     (this.components.other.execute === true ? this.rules.execute : 0)
                 );
+            },
+
+            humanReadablePermissionsLevel(val) {
+                let phrase = '';
+
+                switch(val) {
+                    case '600':
+                        phrase = 'Only the owner can read and write';
+                        break;
+                    case '644':
+                        phrase = 'Only owner can read and write while everyone else can read';
+                        break;
+                    case '700':
+                        phrase = 'Only the owner can read, write, and execute';
+                        break;
+                    case '755':
+                        phrase = 'The owner can read, write, and execute while everyone else can only read and execute';
+                        break;
+                    case '711':
+                        phrase = 'The owner can read, write, and execute while everyone else can only execute';
+                        break;
+                    case '666':
+                        phrase = 'Everyone in the world can read and write';
+                        break;
+                    case '777':
+                        phrase = 'Everyone in the world can read, write, and execute';
+                        break;
+                    default:
+                        phrase = 'I sure hope you know what you\'re doing';
+                }
+
+                return phrase;
+            },
+
+            calculatePermissionStrength(val) {
+                let level = '';
+
+                switch(val) {
+                    case '600':
+                    case '644':
+                    case '700':
+                    case '711':
+                    case '755':
+                        level = 'success';
+                        break;
+                    case '666':
+                        level = 'warning';
+                        break;
+                    case '777':
+                        level = 'danger';
+                        break;
+                    default:
+                        level = 'muted';
+                }
+
+                return level;
             }
         }
     }
