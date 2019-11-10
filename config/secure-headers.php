@@ -110,7 +110,7 @@ return [
      */
 
     'hsts' => [
-        'enable' => false,
+        'enable' => true,
 
         'max-age' => 15552000,
 
@@ -452,7 +452,7 @@ return [
      * Note: custom-csp does not support report-only.
      */
 
-    'custom-csp' => '',
+    'custom-csp' => null,
 
     'csp' => [
         'report-only' => false,
@@ -490,25 +490,25 @@ return [
                 // 'https:',
             ],
 
-            'self' => false,
+            'self' => true,
 
             'unsafe-inline' => true,
 
-            'unsafe-eval' => false,
+            'unsafe-eval' => true,
 
             'strict-dynamic' => false,
 
             'unsafe-hashed-attributes' => false,
 
             // https://www.chromestatus.com/feature/5792234276388864
-            'report-sample' => true,
+            'report-sample'            => true,
 
             'add-generated-nonce' => false,
         ],
 
         'style-src' => [
             'allow' => [
-                //
+                'https://fonts.googleapis.com',
             ],
 
             'hashes' => [
@@ -525,7 +525,7 @@ return [
                 // 'https:',
             ],
 
-            'self' => false,
+            'self' => true,
 
             'unsafe-inline' => false,
 
@@ -538,6 +538,8 @@ return [
             'allow' => [
                 'https://www.google-analytics.com',
             ],
+
+            'self' => true,
         ],
 
         'default-src' => [
@@ -553,7 +555,11 @@ return [
         ],
 
         'font-src' => [
-            //
+            'allow' => [
+                'https://fonts.gstatic.com',
+                'data:',
+            ],
+            'self'  => true,
         ],
 
         'form-action' => [
