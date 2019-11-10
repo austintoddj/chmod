@@ -16,10 +16,19 @@
         <div class="footer mt-5">
             <p class="text-center text-muted">
                 <span>&copy; {{ now()->format('Y') }}</span>
-                <a href="/" class="text-decoration-none">whatthechmod.com</a>
+                <a href="/" class="text-decoration-none" rel="noopener">whatthechmod.com</a>
             </p>
         </div>
 
         <script src="{{ asset('/js/app.js') }}"></script>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-80244014-4"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', 'UA-80244014-4');
+        </script>
+
     </body>
 </html>
