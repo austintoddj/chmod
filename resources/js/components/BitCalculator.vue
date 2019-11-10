@@ -142,7 +142,7 @@
                     <div class="card-footer border-0">
                         <div class="d-flex justify-content-between">
                             <a href="#" v-tooltip="{ placement: 'bottom' }" class="text-decoration-none" :data-original-title="permissionAsHumanReadable">
-                                <p class="mb-0 px-3" :class="'text-'+permissionStrength">{{ permissionAsString }}</p>
+                                <p class="mb-0 px-3" :class="'text-'+permissionStrengthLabel">{{ permissionAsString }}</p>
                             </a>
                             <p class="text-muted mb-0 px-3">chmod {{ permissionAsOctal }} <em>filename</em></p>
                         </div>
@@ -214,7 +214,7 @@
                 return this.humanReadablePermissionsLevel(this.permissionAsOctal);
             },
 
-            permissionStrength() {
+            permissionStrengthLabel() {
                 return this.calculatePermissionStrength(this.permissionAsOctal);
             }
         },
