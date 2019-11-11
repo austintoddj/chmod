@@ -9,6 +9,15 @@
         <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     </head>
     <body class="bg-light">
+    <div class="container mt-2">
+        <div class="row justify-content-center">
+            <div class="col-md-8 text-left">
+                <p class="mt-5 text-uppercase text-muted font-weight-bold small mb-1">A Unix permissions calculator</p>
+                <h1 class="font-serif font-weight-bold">What. The. Chmod.</h1>
+            </div>
+        </div>
+    </div>
+
         <div id="app">
             <router-view></router-view>
         </div>

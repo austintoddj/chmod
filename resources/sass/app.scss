@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Nunito:300,400,600,700,800,900&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Merriweather|Nunito:300,400,600,700,800,900&display=swap');
 @import 'variables';
 
 .primary {
@@ -7,6 +7,10 @@
 
 .secondary {
     fill: $gray-700;
+}
+
+.font-serif {
+    font-family: $font-family-serif;
 }
 
 [v-cloak] {

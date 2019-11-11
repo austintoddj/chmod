@@ -141,10 +141,10 @@
                     </div>
                     <div class="card-footer border-0">
                         <div class="d-flex justify-content-between">
+                            <p class="mb-0 px-3"><code class="text-muted"><span class="font-weight-bold" style="user-select: none">~$ </span>chmod {{ permissionAsOctal }} <em>filename</em></code></p>
                             <a href="#" v-tooltip="{ placement: 'bottom' }" class="text-decoration-none" :data-original-title="permissionAsHumanReadable">
                                 <p class="mb-0 px-3" :class="'text-'+permissionStrengthLabel">{{ permissionAsString }}</p>
                             </a>
-                            <p class="text-muted mb-0 px-3">chmod {{ permissionAsOctal }} <em>filename</em></p>
                         </div>
                     </div>
                 </div>
