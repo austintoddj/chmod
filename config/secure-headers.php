@@ -537,7 +537,7 @@ return [
         'img-src' => [
             'allow' => [
                 'https://www.google-analytics.com',
-                'https://www.googletagmanager.com'
+                'https://www.googletagmanager.com',
             ],
 
             'self' => true,
