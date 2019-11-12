@@ -3,10 +3,21 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    {{-- todo: add meta tags --}}
+    <meta name="description" content="A Unix permissions calculator for that once-a-year occasion when you need to modify file access.">
+
+    <meta property="og:url" content="{{ config('app.url') }}">
+    <meta property="og:type" content="website">
+    <meta property="og:description" content="A Unix permissions calculator for that once-a-year occasion when you need to modify file access.">
+    <meta property="og:title" content="{{ config('app.name') }}">
+    <meta property="og:site_name" content="{{ config('app.name') }}">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ config('app.name') }}">
+    <meta name="twitter:description" content="A Unix permissions calculator for that once-a-year occasion when you need to modify file access.">
 
     <title>{{ config('app.name') }}</title>
 
+    <link rel="canonical" href="{{ config('app.url') }}">
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 </head>
 <body class="bg-light vh-100 d-flex">
