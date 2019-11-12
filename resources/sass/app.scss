@@ -9,6 +9,36 @@
     fill: $gray-700;
 }
 
+.fill-success-primary {
+    fill: $green;
+    fill-opacity: .4;
+}
+
+.fill-success-secondary {
+    fill: $green;
+    fill-opacity: 1;
+}
+
+.fill-warning-primary {
+    fill: $yellow;
+    fill-opacity: .6;
+}
+
+.fill-warning-secondary {
+    fill: darken($yellow, 30%);
+    fill-opacity: 1;
+}
+
+.fill-danger-primary {
+    fill: $red;
+    fill-opacity: .4;
+}
+
+.fill-danger-secondary {
+    fill: $red;
+    fill-opacity: 1;
+}
+
 .font-serif {
     font-family: $font-family-serif;
 }
