@@ -20,11 +20,11 @@
     <link rel="canonical" href="{{ config('app.url') }}">
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 </head>
-<body class="bg-light vh-100 d-flex">
-<div class="d-flex mx-auto col-md-6">
+<body class="bg-light d-flex min-vh-100">
+<div class="d-flex mx-auto col-lg-6 col-md-8 col-sm-12">
     <div class="w-100 mb-auto">
         <p class="mt-5 text-uppercase text-center text-muted font-weight-bold small mb-1">A Unix permissions calculator</p>
-        <h1 class="font-serif font-weight-bold text-center mb-5">What. The. Chmod.</h1>
+        <h1 class="font-serif font-weight-bold text-center">What. The. Chmod.</h1>
         <div id="app">
             <router-view></router-view>
         </div>
@@ -32,8 +32,8 @@
 </div>
 
 
-<div class="footer position-absolute fixed-bottom">
-    <p class="text-right text-muted pr-4 small">
+<div class="footer fixed-bottom d-none d-lg-block">
+    <p class="text-center text-lg-right text-muted pr-4 small">
         <span>&copy; {{ now()->format('Y') }}</span>
         <a href="/" class="text-decoration-none" rel="noopener">whatthechmod.com</a>
     </p>
