@@ -146,8 +146,9 @@
                     </p>
                 </div>
                 <div class="col-md-6 text-lg-right">
-                    <a href="#" v-tooltip="{ placement: 'bottom' }" class="text-decoration-none" :data-original-title="permissionAsHumanReadable">
-                        <p class="mb-0 text-muted">{{ permissionAsString }}
+                    <p class="mb-0 text-muted">
+                        <a href="#" v-tooltip="{ placement: 'bottom' }" class="text-decoration-none" :data-original-title="permissionAsHumanReadable">
+                            {{ permissionAsString }}
                             <span v-if="permissionStrength === 'strong'">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="25" viewBox="0 0 24 24" class="ml-2 icon-security-check"><path class="fill-success-primary" d="M4 4l8-2 8 2v9.06a8 8 0 0 1-4.42 7.15L12 22l-3.58-1.79A8 8 0 0 1 4 13.06V4z"/><path class="fill-success-secondary" d="M10.5 12.59l4.3-4.3a1 1 0 0 1 1.4 1.42l-5 5a1 1 0 0 1-1.4 0l-2-2a1 1 0 0 1 1.4-1.42l1.3 1.3z"/></svg>
                             </span>
@@ -157,8 +158,8 @@
                             <span v-if="permissionStrength === 'weak'">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="25" viewBox="0 0 24 24" class="icon-security-important"><path class="fill-danger-primary" d="M4 4l8-2 8 2v9.06a8 8 0 0 1-4.42 7.15L12 22l-3.58-1.79A8 8 0 0 1 4 13.06V4z"/><path class="fill-danger-secondary" d="M12 18a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm1-5.9c-.13 1.2-1.88 1.2-2 0l-.5-5a1 1 0 0 1 1-1.1h1a1 1 0 0 1 1 1.1l-.5 5z"/></svg>
                             </span>
-                        </p>
-                    </a>
+                        </a>
+                    </p>
                 </div>
             </div>
         </div>
