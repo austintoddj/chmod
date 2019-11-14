@@ -47,7 +47,6 @@
                         <td class="text-center">
                             <input
                                 id="userRead"
-                                ref="userRead"
                                 v-model="components.user.read"
                                 class="form-check-input position-relative ml-0"
                                 type="checkbox"
@@ -56,7 +55,6 @@
                         <td class="text-center">
                             <input
                                 id="groupRead"
-                                ref="groupRead"
                                 v-model="components.group.read"
                                 class="form-check-input position-relative ml-0"
                                 type="checkbox"
@@ -65,7 +63,6 @@
                         <td class="text-center">
                             <input
                                 id="otherRead"
-                                ref="otherRead"
                                 v-model="components.other.read"
                                 class="form-check-input position-relative ml-0"
                                 type="checkbox"
@@ -77,7 +74,6 @@
                         <td class="text-center">
                             <input
                                 id="userWrite"
-                                ref="userWrite"
                                 v-model="components.user.write"
                                 class="form-check-input position-relative ml-0"
                                 type="checkbox"
@@ -86,7 +82,6 @@
                         <td class="text-center">
                             <input
                                 id="groupWrite"
-                                ref="groupWrite"
                                 v-model="components.group.write"
                                 class="form-check-input position-relative ml-0"
                                 type="checkbox"
@@ -95,7 +90,6 @@
                         <td class="text-center">
                             <input
                                 id="otherWrite"
-                                ref="otherWrite"
                                 v-model="components.other.write"
                                 class="form-check-input position-relative ml-0"
                                 type="checkbox"
@@ -107,7 +101,6 @@
                         <td class="text-center">
                             <input
                                 id="userExecute"
-                                ref="userExecute"
                                 v-model="components.user.execute"
                                 class="form-check-input position-relative ml-0"
                                 type="checkbox"
@@ -116,7 +109,6 @@
                         <td class="text-center">
                             <input
                                 id="groupExecute"
-                                ref="groupExecute"
                                 v-model="components.group.execute"
                                 class="form-check-input position-relative ml-0"
                                 type="checkbox"
@@ -125,7 +117,6 @@
                         <td class="text-center">
                             <input
                                 id="otherExecute"
-                                ref="otherExecute"
                                 v-model="components.other.execute"
                                 class="form-check-input position-relative ml-0"
                                 type="checkbox"
@@ -258,95 +249,30 @@
             },
 
             humanReadablePermissionLevel(val) {
+                return 'The ' + this.calculateAccess('owner', val.charAt(0)) +
+                    ', the ' + this.calculateAccess('group', val.charAt(1)) +
+                    ', and ' + this.calculateAccess('everyone else', val.charAt(2));
+            },
 
-                let userAccess = val.charAt(0);
-                let userCan = '';
-
-                switch (userAccess) {
+            calculateAccess(entity, val) {
+                switch (val) {
                     case '1':
-                        userCan = 'owner can execute';
-                        break;
+                        return entity + ' can execute';
                     case '2':
-                        userCan = 'owner can write';
-                        break;
+                        return entity + ' can write';
                     case '3':
-                        userCan = 'owner can write and execute';
-                        break;
+                        return entity + ' can write and execute';
                     case '4':
-                        userCan = 'owner can read';
-                        break;
+                        return entity + ' can read';
                     case '5':
-                        userCan = 'owner can read and execute';
-                        break;
+                        return entity + ' can read and execute';
                     case '6':
-                        userCan = 'owner can read and write';
-                        break;
+                        return entity + ' can read and write';
                     case '7':
-                        userCan = 'owner can read, write and execute';
-                        break;
+                        return entity + ' can read, write and execute';
                     default:
-                        break;
+                        return entity + ' has no access';
                 }
-
-                let groupAccess = val.charAt(1);
-                let groupCan = '';
-
-                switch (groupAccess) {
-                    case '1':
-                        groupCan = 'group can execute';
-                        break;
-                    case '2':
-                        groupCan = 'group can write';
-                        break;
-                    case '3':
-                        groupCan = 'group can write and execute';
-                        break;
-                    case '4':
-                        groupCan = 'group can read';
-                        break;
-                    case '5':
-                        groupCan = 'group can read and execute';
-                        break;
-                    case '6':
-                        groupCan = 'group can read and write';
-                        break;
-                    case '7':
-                        groupCan = 'group can read, write and execute';
-                        break;
-                    default:
-                        break;
-                }
-
-                let otherAccess = val.charAt(2);
-                let otherCan = '';
-
-                switch (otherAccess) {
-                    case '1':
-                        otherCan = 'everyone can execute';
-                        break;
-                    case '2':
-                        otherCan = 'everyone can write';
-                        break;
-                    case '3':
-                        otherCan = 'everyone can write and execute';
-                        break;
-                    case '4':
-                        otherCan = 'everyone can read';
-                        break;
-                    case '5':
-                        otherCan = 'everyone can read and execute';
-                        break;
-                    case '6':
-                        otherCan = 'everyone can read and write';
-                        break;
-                    case '7':
-                        otherCan = 'everyone can read, write and execute';
-                        break;
-                    default:
-                        break;
-                }
-
-                return 'The ' + userCan + ', the ' + groupCan + ', and ' + otherCan;
             },
 
             calculatePermissionStrength(val) {
