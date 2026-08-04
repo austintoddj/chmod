@@ -52,11 +52,14 @@
 
 html {
   -webkit-text-size-adjust: 100%;
+  overflow-x: clip;
 }
 
 body {
   margin: 0;
   min-height: 100dvh;
+  max-width: 100%;
+  overflow-x: clip;
   font-family: var(--font-sans);
   font-size: 15px;
   line-height: 1.5;
@@ -137,6 +140,7 @@ code {
 
 .page {
   width: min(720px, calc(100% - 2rem));
+  max-width: 100%;
   margin: 0 auto;
   padding: 3.5rem 0 4rem;
   animation: rise 0.7s var(--ease) both;
@@ -323,8 +327,14 @@ code {
 .outputs {
   padding: 1.5rem;
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: 1.25rem;
   border-bottom: 1px solid var(--border);
+}
+
+/* Grid/flex children default min-width:auto; large inputs blow past the panel. */
+.outputs > * {
+  min-width: 0;
 }
 
 .field-label {
@@ -341,6 +351,8 @@ code {
   display: flex;
   align-items: center;
   gap: 0.15rem;
+  min-width: 0;
+  max-width: 100%;
   background: var(--bg-0);
   border: 1px solid var(--border);
   border-radius: var(--radius);
@@ -365,8 +377,9 @@ code {
 }
 
 .octal-input {
-  flex: 1;
+  flex: 1 1 0;
   min-width: 0;
+  width: 100%;
   border: none;
   outline: none;
   background: transparent;
@@ -460,6 +473,7 @@ code {
   font-size: 0.9rem;
   color: var(--text-2);
   line-height: 1.55;
+  overflow-wrap: anywhere;
 }
 
 .mono-soft {
@@ -470,14 +484,18 @@ code {
 
 .command-block {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: 0.55rem;
+  min-width: 0;
 }
 
 .command-meta {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: 1rem;
+  gap: 0.65rem 1rem;
+  min-width: 0;
 }
 
 .filename-label {
@@ -498,6 +516,8 @@ code {
 
 .filename-input {
   width: min(10.5rem, 36vw);
+  max-width: 100%;
+  min-width: 0;
   padding: 0.3rem 0.55rem;
   border-radius: 6px;
   border: 1px solid var(--border);
@@ -523,6 +543,7 @@ code {
   display: flex;
   align-items: stretch;
   gap: 0.6rem;
+  min-width: 0;
 }
 
 .command {
@@ -840,7 +861,7 @@ code {
 
   .matrix-grid {
     gap: 0.4rem;
-    grid-template-columns: minmax(3.6rem, 0.9fr) repeat(3, 1fr);
+    grid-template-columns: minmax(0, 3.6rem) repeat(3, minmax(0, 1fr));
   }
 
   .perm-title {
@@ -859,11 +880,11 @@ code {
   }
 
   .preset-list {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .special-bits {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .command-row {
@@ -872,6 +893,15 @@ code {
 
   .copy-btn {
     min-height: 2.75rem;
+  }
+
+  .filename-label {
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+
+  .filename-input {
+    width: min(10.5rem, 100%);
   }
 
   .role-hint {

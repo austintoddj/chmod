@@ -124,6 +124,7 @@ function render(): void {
                 inputmode="numeric"
                 pattern="[0-7]{3,4}"
                 maxlength="4"
+                size="4"
                 spellcheck="false"
                 autocomplete="off"
                 value="${escapeAttr(octalDisplay)}"
