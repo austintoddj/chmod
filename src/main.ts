@@ -15,13 +15,26 @@ import {
   emptySpecial,
   humanReadable,
   octalToBits,
-  permissionStrength
-} from './permissions.js'
+  permissionStrength,
+  type Bits,
+  type Perm,
+  type Role,
+  type SpecialBits
+} from './permissions'
 import './style.css'
 
 // ── State ──────────────────────────────────────────────────────────────────
 
-const state = {
+type AppState = {
+  bits: Bits
+  special: SpecialBits
+  filename: string
+  showSpecial: boolean
+  copied: boolean
+  octalDraft: string | null
+}
+
+const state: AppState = {
   bits: defaultBits(),
   special: emptySpecial(),
   filename: 'filename',
@@ -30,12 +43,12 @@ const state = {
   octalDraft: null
 }
 
-let copyTimer = null
+let copyTimer: ReturnType<typeof setTimeout> | null = null
 let eventsBound = false
 
 // ── Render (initial mount only) ────────────────────────────────────────────
 
-function render() {
+function render(): void {
   const octal = bitsToOctal(state.bits, state.special)
   const symbolic = bitsToSymbolic(state.bits, state.special)
   const strength = permissionStrength(state.bits)
@@ -45,6 +58,8 @@ function render() {
   const activePreset = PRESETS.find(p => p.octal === octal)?.octal ?? null
 
   const app = document.querySelector('#app')
+  if (!app) return
+
   app.innerHTML = `
     <div class="page">
       <header class="hero">
@@ -220,7 +235,12 @@ function render() {
   bindEvents()
 }
 
-function specialBit(key, label, value, hint) {
+function specialBit(
+  key: keyof SpecialBits,
+  label: string,
+  value: string,
+  hint: string
+): string {
   const on = state.special[key]
   return `
     <button
@@ -240,34 +260,43 @@ function specialBit(key, label, value, hint) {
 
 // ── Events (bound once; DOM is updated in place after that) ────────────────
 
-function bindEvents() {
+function bindEvents(): void {
   if (eventsBound) return
   eventsBound = true
 
   const app = document.querySelector('#app')
+  if (!app) return
 
   app.addEventListener('click', e => {
-    const bit = e.target.closest('.bit')
-    if (bit && app.contains(bit)) {
-      const { role, perm } = bit.dataset
+    const target = e.target
+    if (!(target instanceof Element)) return
+
+    const bit = target.closest('.bit')
+    if (bit instanceof HTMLElement && app.contains(bit)) {
+      const role = bit.dataset.role as Role | undefined
+      const perm = bit.dataset.perm as Perm | undefined
+      if (!role || !perm) return
       state.bits[role][perm] = !state.bits[role][perm]
       state.octalDraft = null
       updateUI()
       return
     }
 
-    const special = e.target.closest('[data-special]')
-    if (special && app.contains(special)) {
-      const key = special.dataset.special
+    const special = target.closest('[data-special]')
+    if (special instanceof HTMLElement && app.contains(special)) {
+      const key = special.dataset.special as keyof SpecialBits | undefined
+      if (!key) return
       state.special[key] = !state.special[key]
       state.octalDraft = null
       updateUI()
       return
     }
 
-    const preset = e.target.closest('[data-preset]')
-    if (preset && app.contains(preset)) {
-      const parsed = octalToBits(preset.dataset.preset)
+    const preset = target.closest('[data-preset]')
+    if (preset instanceof HTMLElement && app.contains(preset)) {
+      const mode = preset.dataset.preset
+      if (!mode) return
+      const parsed = octalToBits(mode)
       if (!parsed) return
       state.bits = parsed.bits
       state.special = parsed.special
@@ -276,24 +305,27 @@ function bindEvents() {
       return
     }
 
-    const specialToggle = e.target.closest('#special-toggle')
+    const specialToggle = target.closest('#special-toggle')
     if (specialToggle && app.contains(specialToggle)) {
       state.showSpecial = !state.showSpecial
       updateSpecialPanel()
       return
     }
 
-    const copyBtn = e.target.closest('#copy-btn')
+    const copyBtn = target.closest('#copy-btn')
     if (copyBtn && app.contains(copyBtn)) {
       void copyCommand()
     }
   })
 
   app.addEventListener('input', e => {
-    if (e.target.id === 'octal-input') {
-      const raw = e.target.value.replace(/[^0-7]/g, '').slice(0, 4)
+    const target = e.target
+    if (!(target instanceof HTMLInputElement)) return
+
+    if (target.id === 'octal-input') {
+      const raw = target.value.replace(/[^0-7]/g, '').slice(0, 4)
       state.octalDraft = raw
-      e.target.value = raw
+      target.value = raw
 
       if (raw.length === 3 || raw.length === 4) {
         const parsed = octalToBits(raw)
@@ -306,25 +338,36 @@ function bindEvents() {
       return
     }
 
-    if (e.target.id === 'filename-input') {
-      state.filename = e.target.value || 'filename'
+    if (target.id === 'filename-input') {
+      state.filename = target.value || 'filename'
       updateCommandOnly()
+    }
+  })
+
+  // Select all on focus so click/tab → type replaces the default target.
+  app.addEventListener('focusin', e => {
+    const target = e.target
+    if (target instanceof HTMLInputElement && target.id === 'filename-input') {
+      target.select()
     }
   })
 
   app.addEventListener(
     'blur',
     e => {
-      if (e.target.id === 'octal-input') {
+      const target = e.target
+      if (!(target instanceof HTMLInputElement)) return
+
+      if (target.id === 'octal-input') {
         state.octalDraft = null
         updateUI()
         return
       }
 
-      if (e.target.id === 'filename-input') {
+      if (target.id === 'filename-input') {
         if (!state.filename.trim()) {
           state.filename = 'filename'
-          e.target.value = state.filename
+          target.value = state.filename
         }
         updateCommandOnly()
       }
@@ -333,13 +376,19 @@ function bindEvents() {
   )
 
   app.addEventListener('keydown', e => {
-    if (e.target.id === 'octal-input' && e.key === 'Enter') {
-      e.target.blur()
+    if (!(e instanceof KeyboardEvent)) return
+    const target = e.target
+    if (
+      target instanceof HTMLInputElement &&
+      target.id === 'octal-input' &&
+      e.key === 'Enter'
+    ) {
+      target.blur()
     }
   })
 }
 
-async function copyCommand() {
+async function copyCommand(): Promise<void> {
   const octal = bitsToOctal(state.bits, state.special)
   const text = chmodCommand(octal, state.filename)
   try {
@@ -356,7 +405,7 @@ async function copyCommand() {
   }
   state.copied = true
   updateCopyButton()
-  clearTimeout(copyTimer)
+  if (copyTimer !== null) clearTimeout(copyTimer)
   copyTimer = setTimeout(() => {
     state.copied = false
     updateCopyButton()
@@ -366,15 +415,17 @@ async function copyCommand() {
 // ── In-place DOM updates (no full re-render → no scroll/focus jump) ────────
 
 /** Refresh all live permission UI from state without rebuilding the page. */
-function updateUI({ preserveOctalDraft = false } = {}) {
+function updateUI({ preserveOctalDraft = false } = {}): void {
   const octal = bitsToOctal(state.bits, state.special)
   const symbolic = bitsToSymbolic(state.bits, state.special)
   const strength = permissionStrength(state.bits)
   const strengthMeta = STRENGTH[strength]
   const readable = humanReadable(octal)
 
-  document.querySelectorAll('.bit').forEach(btn => {
-    const { role, perm } = btn.dataset
+  document.querySelectorAll<HTMLElement>('.bit').forEach(btn => {
+    const role = btn.dataset.role as Role | undefined
+    const perm = btn.dataset.perm as Perm | undefined
+    if (!role || !perm) return
     const on = state.bits[role][perm]
     btn.classList.toggle('is-on', on)
     btn.setAttribute('aria-checked', String(on))
@@ -382,14 +433,16 @@ function updateUI({ preserveOctalDraft = false } = {}) {
     if (glyph) glyph.textContent = on ? PERM_LETTERS[perm] : '–'
   })
 
-  document.querySelectorAll('[data-special]').forEach(btn => {
-    const on = state.special[btn.dataset.special]
+  document.querySelectorAll<HTMLElement>('[data-special]').forEach(btn => {
+    const key = btn.dataset.special as keyof SpecialBits | undefined
+    if (!key) return
+    const on = state.special[key]
     btn.classList.toggle('is-on', on)
     btn.setAttribute('aria-checked', String(on))
   })
 
   if (!preserveOctalDraft) {
-    const octalInput = document.querySelector('#octal-input')
+    const octalInput = document.querySelector<HTMLInputElement>('#octal-input')
     if (octalInput) octalInput.value = octal
   }
 
@@ -399,21 +452,21 @@ function updateUI({ preserveOctalDraft = false } = {}) {
   const strengthEl = document.querySelector('.strength')
   if (strengthEl) {
     strengthEl.className = `strength strength-${strength}`
-    strengthEl.title = strengthMeta.detail
+    strengthEl.setAttribute('title', strengthMeta.detail)
     strengthEl.innerHTML = `<span class="strength-dot" aria-hidden="true"></span>${strengthMeta.label}`
   }
 
   const human = document.querySelector('.human')
   if (human) human.textContent = readable
 
-  document.querySelectorAll('.preset').forEach(btn => {
+  document.querySelectorAll<HTMLElement>('.preset').forEach(btn => {
     btn.classList.toggle('is-active', btn.dataset.preset === octal)
   })
 
   updateCommandOnly()
 }
 
-function updateCommandOnly() {
+function updateCommandOnly(): void {
   const octal = bitsToOctal(state.bits, state.special)
   const mode = document.querySelector('.cmd-mode')
   const file = document.querySelector('.cmd-file')
@@ -421,9 +474,9 @@ function updateCommandOnly() {
   if (file) file.textContent = state.filename || 'filename'
 }
 
-function updateSpecialPanel() {
+function updateSpecialPanel(): void {
   const toggle = document.querySelector('#special-toggle')
-  const panel = document.querySelector('.special-panel')
+  const panel = document.querySelector<HTMLElement>('.special-panel')
   const chevron = document.querySelector('.special-chevron')
   if (toggle) toggle.setAttribute('aria-expanded', String(state.showSpecial))
   if (panel) {
@@ -433,7 +486,7 @@ function updateSpecialPanel() {
   if (chevron) chevron.classList.toggle('is-open', state.showSpecial)
 }
 
-function updateCopyButton() {
+function updateCopyButton(): void {
   const btn = document.querySelector('#copy-btn')
   if (!btn) return
   btn.classList.toggle('is-copied', state.copied)
@@ -445,7 +498,7 @@ function updateCopyButton() {
 
 // ── Helpers ────────────────────────────────────────────────────────────────
 
-function escapeHtml(str) {
+function escapeHtml(str: string): string {
   return String(str)
     .replaceAll('&', '&amp;')
     .replaceAll('<', '&lt;')
@@ -453,19 +506,19 @@ function escapeHtml(str) {
     .replaceAll('"', '&quot;')
 }
 
-function escapeAttr(str) {
+function escapeAttr(str: string): string {
   return escapeHtml(str).replaceAll("'", '&#39;')
 }
 
-function copyIcon() {
+function copyIcon(): string {
   return `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>`
 }
 
-function copyCheckIcon() {
+function copyCheckIcon(): string {
   return `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>`
 }
 
-function chevronIcon() {
+function chevronIcon(): string {
   return `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>`
 }
 

@@ -9,4 +9,4 @@ npm install
 npm run dev
 ```
 
-`npm run preflight` runs lint, format, tests, and build.
+`npm run preflight` runs lint, format, typecheck, tests, and build.

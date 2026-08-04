@@ -11,7 +11,7 @@ import {
   octalToBits,
   permissionStrength,
   roleOctal
-} from './permissions.js'
+} from './permissions'
 
 describe('roleOctal', () => {
   it('sums rwx bit values', () => {
@@ -82,8 +82,8 @@ describe('octalToBits', () => {
   it('parses 3-digit modes', () => {
     const parsed = octalToBits('644')
     expect(parsed).not.toBeNull()
-    expect(bitsToOctal(parsed.bits, parsed.special)).toBe('644')
-    expect(parsed.special).toEqual(emptySpecial())
+    expect(bitsToOctal(parsed!.bits, parsed!.special)).toBe('644')
+    expect(parsed!.special).toEqual(emptySpecial())
   })
 
   it('parses 4-digit modes with special bits', () => {
@@ -95,18 +95,18 @@ describe('octalToBits', () => {
       const expected =
         mode[0] === '0'
           ? mode.slice(1)
-          : bitsToOctal(parsed.bits, parsed.special)
+          : bitsToOctal(parsed!.bits, parsed!.special)
       if (mode[0] !== '0') {
-        expect(bitsToOctal(parsed.bits, parsed.special)).toBe(mode)
+        expect(bitsToOctal(parsed!.bits, parsed!.special)).toBe(mode)
       } else {
-        expect(bitsToOctal(parsed.bits, parsed.special)).toBe(expected)
+        expect(bitsToOctal(parsed!.bits, parsed!.special)).toBe(expected)
       }
     }
   })
 
   it('strips non-digits', () => {
     expect(octalToBits('mode 7-5-5')).not.toBeNull()
-    expect(bitsToOctal(octalToBits('mode 7-5-5').bits)).toBe('755')
+    expect(bitsToOctal(octalToBits('mode 7-5-5')!.bits)).toBe('755')
   })
 
   it('rejects invalid input', () => {
@@ -116,6 +116,8 @@ describe('octalToBits', () => {
     expect(octalToBits('888')).toBeNull()
     expect(octalToBits('12')).toBeNull()
     expect(octalToBits('12345')).toBeNull()
+    // 4-digit with special nibble out of range (digit 8/9 already filtered by 0–7 check on base)
+    expect(octalToBits('8755')).toBeNull()
   })
 
   it('round-trips all single-role digits 0–7', () => {
@@ -124,7 +126,7 @@ describe('octalToBits', () => {
         for (let o = 0; o <= 7; o++) {
           const mode = `${u}${g}${o}`
           const parsed = octalToBits(mode)
-          expect(bitsToOctal(parsed.bits, parsed.special)).toBe(mode)
+          expect(bitsToOctal(parsed!.bits, parsed!.special)).toBe(mode)
         }
       }
     }
@@ -149,6 +151,14 @@ describe('bitsToSymbolic', () => {
       })
     ).toBe('-rwsr-xr-x')
 
+    expect(
+      bitsToSymbolic(defaultBits(), {
+        setuid: false,
+        setgid: true,
+        sticky: false
+      })
+    ).toBe('-rwxr-sr-x')
+
     const noExec = emptyBits()
     noExec.user.read = true
     expect(
@@ -158,6 +168,16 @@ describe('bitsToSymbolic', () => {
         sticky: false
       })
     ).toBe('-r-S------')
+
+    const noGroupExec = emptyBits()
+    noGroupExec.group.read = true
+    expect(
+      bitsToSymbolic(noGroupExec, {
+        setuid: false,
+        setgid: true,
+        sticky: false
+      })
+    ).toBe('----r-S---')
   })
 
   it('uses t/T for sticky', () => {
@@ -169,7 +189,7 @@ describe('bitsToSymbolic', () => {
       })
     ).toBe('-rwxr-xr-t')
 
-    const noOtherExec = octalToBits('754').bits
+    const noOtherExec = octalToBits('754')!.bits
     expect(
       bitsToSymbolic(noOtherExec, {
         setuid: false,
@@ -210,22 +230,22 @@ describe('accessPhrase / humanReadable', () => {
 describe('permissionStrength', () => {
   it('is strong when only owner can write', () => {
     expect(permissionStrength(defaultBits())).toBe('strong')
-    expect(permissionStrength(octalToBits('644').bits)).toBe('strong')
-    expect(permissionStrength(octalToBits('600').bits)).toBe('strong')
+    expect(permissionStrength(octalToBits('644')!.bits)).toBe('strong')
+    expect(permissionStrength(octalToBits('600')!.bits)).toBe('strong')
   })
 
   it('is moderate when the group can write', () => {
-    expect(permissionStrength(octalToBits('664').bits)).toBe('moderate')
-    expect(permissionStrength(octalToBits('775').bits)).toBe('moderate')
+    expect(permissionStrength(octalToBits('664')!.bits)).toBe('moderate')
+    expect(permissionStrength(octalToBits('775')!.bits)).toBe('moderate')
   })
 
   it('is weak when others can write', () => {
-    expect(permissionStrength(octalToBits('666').bits)).toBe('weak')
-    expect(permissionStrength(octalToBits('777').bits)).toBe('weak')
+    expect(permissionStrength(octalToBits('666')!.bits)).toBe('weak')
+    expect(permissionStrength(octalToBits('777')!.bits)).toBe('weak')
   })
 
   it('prioritizes other-write over group-write', () => {
-    expect(permissionStrength(octalToBits('662').bits)).toBe('weak')
+    expect(permissionStrength(octalToBits('662')!.bits)).toBe('weak')
   })
 })
 

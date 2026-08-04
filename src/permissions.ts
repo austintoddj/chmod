@@ -3,24 +3,34 @@ const PERM_VALUES = {
   read: 4,
   write: 2,
   execute: 1
-}
+} as const
 
-export const PERM_LETTERS = {
+export type Role = 'user' | 'group' | 'other'
+export type Perm = 'read' | 'write' | 'execute'
+export type RoleBits = { read: boolean; write: boolean; execute: boolean }
+export type SpecialBits = { setuid: boolean; setgid: boolean; sticky: boolean }
+export type Bits = { user: RoleBits; group: RoleBits; other: RoleBits }
+export type StrengthKey = 'strong' | 'moderate' | 'weak'
+
+export const PERM_LETTERS: Record<Perm, string> = {
   read: 'r',
   write: 'w',
   execute: 'x'
 }
 
-export const ROLES = ['user', 'group', 'other']
-export const PERMS = ['read', 'write', 'execute']
+export const ROLES: readonly Role[] = ['user', 'group', 'other']
+export const PERMS: readonly Perm[] = ['read', 'write', 'execute']
 
-export const ROLE_LABELS = {
+export const ROLE_LABELS: Record<Role, { title: string; hint: string }> = {
   user: { title: 'User', hint: 'The owner of the file' },
   group: { title: 'Group', hint: 'Users in the file’s group' },
   other: { title: 'Other', hint: 'Everyone else' }
 }
 
-export const PERM_LABELS = {
+export const PERM_LABELS: Record<
+  Perm,
+  { title: string; short: string; hint: string }
+> = {
   read: {
     title: 'Read',
     short: 'r',
@@ -38,7 +48,11 @@ export const PERM_LABELS = {
   }
 }
 
-export const PRESETS = [
+export const PRESETS: readonly {
+  octal: string
+  label: string
+  desc: string
+}[] = [
   { octal: '644', label: '644', desc: 'Typical file' },
   { octal: '664', label: '664', desc: 'Shared file' },
   { octal: '600', label: '600', desc: 'Private file' },
@@ -49,29 +63,25 @@ export const PRESETS = [
   { octal: '000', label: '000', desc: 'No access' }
 ]
 
-export const STRENGTH = {
-  strong: {
-    label: 'Strong',
-    detail: 'Only the owner can write — a solid default for most files.'
-  },
-  moderate: {
-    label: 'Moderate',
-    detail:
-      'The group can write. Fine for shared work, risky on multi-user systems.'
-  },
-  weak: {
-    label: 'Weak',
-    detail:
-      'Anyone can write. Usually a mistake outside throwaway scratch dirs.'
+export const STRENGTH: Record<StrengthKey, { label: string; detail: string }> =
+  {
+    strong: {
+      label: 'Strong',
+      detail: 'Only the owner can write — a solid default for most files.'
+    },
+    moderate: {
+      label: 'Moderate',
+      detail:
+        'The group can write. Fine for shared work, risky on multi-user systems.'
+    },
+    weak: {
+      label: 'Weak',
+      detail:
+        'Anyone can write. Usually a mistake outside throwaway scratch dirs.'
+    }
   }
-}
 
-/**
- * @returns {{ user: RoleBits, group: RoleBits, other: RoleBits }}
- * @typedef {{ read: boolean, write: boolean, execute: boolean }} RoleBits
- * @typedef {{ setuid: boolean, setgid: boolean, sticky: boolean }} SpecialBits
- */
-export function emptyBits() {
+export function emptyBits(): Bits {
   return {
     user: { read: false, write: false, execute: false },
     group: { read: false, write: false, execute: false },
@@ -80,7 +90,7 @@ export function emptyBits() {
 }
 
 /** Default mode: 755 (rwxr-xr-x). */
-export function defaultBits() {
+export function defaultBits(): Bits {
   return {
     user: { read: true, write: true, execute: true },
     group: { read: true, write: false, execute: true },
@@ -88,13 +98,11 @@ export function defaultBits() {
   }
 }
 
-/** @returns {SpecialBits} */
-export function emptySpecial() {
+export function emptySpecial(): SpecialBits {
   return { setuid: false, setgid: false, sticky: false }
 }
 
-/** @param {RoleBits} role */
-export function roleOctal(role) {
+export function roleOctal(role: RoleBits): number {
   return (
     (role.read ? PERM_VALUES.read : 0) +
     (role.write ? PERM_VALUES.write : 0) +
@@ -102,12 +110,10 @@ export function roleOctal(role) {
   )
 }
 
-/**
- * @param {{ user: RoleBits, group: RoleBits, other: RoleBits }} bits
- * @param {SpecialBits} [special]
- * @returns {string}
- */
-export function bitsToOctal(bits, special = emptySpecial()) {
+export function bitsToOctal(
+  bits: Bits,
+  special: SpecialBits = emptySpecial()
+): string {
   const base =
     String(roleOctal(bits.user)) +
     String(roleOctal(bits.group)) +
@@ -121,11 +127,9 @@ export function bitsToOctal(bits, special = emptySpecial()) {
   return specialVal > 0 ? String(specialVal) + base : base
 }
 
-/**
- * @param {string | number} octal
- * @returns {{ bits: ReturnType<typeof emptyBits>, special: SpecialBits } | null}
- */
-export function octalToBits(octal) {
+export function octalToBits(
+  octal: string | number
+): { bits: Bits; special: SpecialBits } | null {
   const cleaned = String(octal).replace(/\D/g, '')
   if (!cleaned) return null
 
@@ -133,7 +137,7 @@ export function octalToBits(octal) {
   let digits = cleaned
 
   if (digits.length === 4) {
-    const s = parseInt(digits[0], 10)
+    const s = parseInt(digits[0]!, 10)
     if (Number.isNaN(s) || s > 7) return null
     special = {
       setuid: Boolean(s & 4),
@@ -146,7 +150,7 @@ export function octalToBits(octal) {
   if (digits.length !== 3) return null
   if (![...digits].every(d => d >= '0' && d <= '7')) return null
 
-  const parseRole = n => ({
+  const parseRole = (n: number): RoleBits => ({
     read: Boolean(n & 4),
     write: Boolean(n & 2),
     execute: Boolean(n & 1)
@@ -154,21 +158,23 @@ export function octalToBits(octal) {
 
   return {
     bits: {
-      user: parseRole(parseInt(digits[0], 10)),
-      group: parseRole(parseInt(digits[1], 10)),
-      other: parseRole(parseInt(digits[2], 10))
+      user: parseRole(parseInt(digits[0]!, 10)),
+      group: parseRole(parseInt(digits[1]!, 10)),
+      other: parseRole(parseInt(digits[2]!, 10))
     },
     special
   }
 }
 
-/**
- * @param {{ user: RoleBits, group: RoleBits, other: RoleBits }} bits
- * @param {SpecialBits} [special]
- * @returns {string}
- */
-export function bitsToSymbolic(bits, special = emptySpecial()) {
-  const letter = (role, perm, specialLetter) => {
+export function bitsToSymbolic(
+  bits: Bits,
+  special: SpecialBits = emptySpecial()
+): string {
+  const letter = (
+    role: RoleBits,
+    perm: Perm,
+    specialLetter: string | null = null
+  ): string => {
     if (!role[perm]) {
       if (perm === 'execute' && specialLetter)
         return specialLetter.toUpperCase()
@@ -196,12 +202,7 @@ export function bitsToSymbolic(bits, special = emptySpecial()) {
   return `-${user}${group}${other}`
 }
 
-/**
- * @param {string} entity
- * @param {string | number} digit
- * @returns {string}
- */
-export function accessPhrase(entity, digit) {
+export function accessPhrase(entity: string, digit: string | number): string {
   switch (String(digit)) {
     case '1':
       return `${entity} can execute`
@@ -222,26 +223,18 @@ export function accessPhrase(entity, digit) {
   }
 }
 
-/**
- * @param {string | number} octal
- * @returns {string}
- */
-export function humanReadable(octal) {
+export function humanReadable(octal: string | number): string {
   const digits = String(octal).replace(/\D/g, '')
   const base = digits.length === 4 ? digits.slice(1) : digits
   if (base.length !== 3) return 'Enter a valid permission mode.'
 
   return (
-    `The ${accessPhrase('owner', base[0])}, the ${accessPhrase('group', base[1])}, ` +
-    `and ${accessPhrase('everyone else', base[2])}.`
+    `The ${accessPhrase('owner', base[0]!)}, the ${accessPhrase('group', base[1]!)}, ` +
+    `and ${accessPhrase('everyone else', base[2]!)}.`
   )
 }
 
-/**
- * @param {{ user: RoleBits, group: RoleBits, other: RoleBits }} bits
- * @returns {'strong' | 'moderate' | 'weak'}
- */
-export function permissionStrength(bits) {
+export function permissionStrength(bits: Bits): StrengthKey {
   if (bits.other.write) return 'weak'
   if (bits.group.write) return 'moderate'
   return 'strong'
@@ -249,11 +242,8 @@ export function permissionStrength(bits) {
 
 /**
  * Build a ready-to-run chmod command string.
- * @param {string} octal
- * @param {string} [filename]
- * @returns {string}
  */
-export function chmodCommand(octal, filename = 'filename') {
+export function chmodCommand(octal: string, filename = 'filename'): string {
   const target = filename.trim() || 'filename'
   return `chmod ${octal} ${target}`
 }

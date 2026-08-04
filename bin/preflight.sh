@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Pre-commit checklist: lint/format, unit tests, and build.
+# Pre-commit checklist: lint/format, typecheck, unit tests, and build.
 #
 # Usage:
 #   bin/preflight.sh
@@ -29,6 +29,9 @@ npm run lint
 
 step "npm run format"
 npm run format
+
+step "npm run typecheck"
+npm run typecheck
 
 step "npm run test:unit"
 npm run test:unit
