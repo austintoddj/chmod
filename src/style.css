@@ -106,6 +106,29 @@ code {
   border: 0;
 }
 
+.skip-link {
+  position: absolute;
+  top: 0.75rem;
+  left: 0.75rem;
+  z-index: 100;
+  padding: 0.55rem 0.85rem;
+  border-radius: 8px;
+  background: var(--bg-2);
+  border: 1px solid var(--border-strong);
+  color: var(--text-0);
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-decoration: none;
+  transform: translateY(-150%);
+  transition: transform 0.18s var(--ease);
+}
+
+.skip-link:focus {
+  transform: none;
+  outline: none;
+  box-shadow: var(--ring);
+}
+
 .mono {
   font-family: var(--font-mono);
 }
@@ -457,8 +480,24 @@ code {
   gap: 1rem;
 }
 
+.filename-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  min-width: 0;
+}
+
+.filename-label-text {
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  white-space: nowrap;
+}
+
 .filename-input {
-  width: min(12rem, 40vw);
+  width: min(10.5rem, 36vw);
   padding: 0.3rem 0.55rem;
   border-radius: 6px;
   border: 1px solid var(--border);
@@ -468,6 +507,11 @@ code {
   color: var(--text-1);
   text-align: right;
   transition: border-color 0.18s var(--ease);
+}
+
+.filename-input::placeholder {
+  color: var(--text-3);
+  opacity: 0.7;
 }
 
 .filename-input:focus {
@@ -756,6 +800,21 @@ code {
   margin: 0;
   font-size: 0.8rem;
   color: var(--text-3);
+}
+
+.footer-credit {
+  margin-top: 0.35rem !important;
+  font-size: 0.75rem !important;
+}
+
+.footer a {
+  color: var(--text-2);
+  text-decoration: none;
+  transition: color 0.18s var(--ease);
+}
+
+.footer a:hover {
+  color: var(--accent);
 }
 
 .footer-mark {

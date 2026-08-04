@@ -3,29 +3,60 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>What. The. Chmod. — Unix Permissions Calculator</title>
     <meta
       name="description"
-      content="A Unix permissions calculator for that once-a-year occasion when you need to modify file access."
+      content="Free chmod calculator: convert Unix file permissions between octal (755, 644) and symbolic (rwxr-xr-x). Toggle bits, use presets, copy the command."
     />
+    <meta
+      name="keywords"
+      content="chmod calculator, unix permissions, octal permissions, file permissions, 755, 644, rwxr-xr-x, chmod 755, linux permissions"
+    />
+    <meta name="author" content="Todd Austin" />
+    <meta name="creator" content="toddaustin.co" />
+    <meta name="robots" content="index, follow" />
+    <meta name="color-scheme" content="dark" />
     <meta name="theme-color" content="#0a0b0f" />
+    <meta name="application-name" content="What. The. Chmod." />
+    <meta name="apple-mobile-web-app-title" content="What. The. Chmod." />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+
+    <link rel="canonical" href="https://whatthechmod.vercel.app/" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
 
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="What. The. Chmod." />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:site_name" content="What. The. Chmod." />
+    <meta property="og:title" content="What. The. Chmod. — Unix Permissions Calculator" />
     <meta
       property="og:description"
-      content="A Unix permissions calculator for that once-a-year occasion when you need to modify file access."
+      content="Free chmod calculator: convert Unix file permissions between octal (755, 644) and symbolic (rwxr-xr-x). Toggle bits, use presets, copy the command."
     />
-    <meta property="og:site_name" content="What. The. Chmod." />
+    <meta property="og:url" content="https://whatthechmod.vercel.app/" />
+    <meta property="og:image" content="https://whatthechmod.vercel.app/og.png" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta
+      property="og:image:alt"
+      content="What. The. Chmod. — a Unix permissions calculator with octal and symbolic modes"
+    />
 
-    <meta name="twitter:card" content="summary" />
-    <meta name="twitter:title" content="What. The. Chmod." />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="What. The. Chmod. — Unix Permissions Calculator" />
     <meta
       name="twitter:description"
-      content="A Unix permissions calculator for that once-a-year occasion when you need to modify file access."
+      content="Free chmod calculator: convert Unix file permissions between octal (755, 644) and symbolic (rwxr-xr-x)."
+    />
+    <meta name="twitter:image" content="https://whatthechmod.vercel.app/og.png" />
+    <meta
+      name="twitter:image:alt"
+      content="What. The. Chmod. — a Unix permissions calculator with octal and symbolic modes"
     />
 
-    <link rel="canonical" href="https://whatthechmod.com" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -33,10 +64,58 @@
       rel="stylesheet"
     />
 
-    <title>What. The. Chmod.</title>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "What. The. Chmod.",
+        "url": "https://whatthechmod.vercel.app/",
+        "description": "Free chmod calculator: convert Unix file permissions between octal (755, 644) and symbolic (rwxr-xr-x). Toggle bits, use presets, copy the command.",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Any",
+        "browserRequirements": "Requires JavaScript",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        },
+        "author": {
+          "@type": "Person",
+          "name": "Todd Austin",
+          "url": "https://toddaustin.co"
+        },
+        "creator": {
+          "@type": "Person",
+          "name": "Todd Austin",
+          "url": "https://toddaustin.co"
+        },
+        "image": "https://whatthechmod.vercel.app/og.png",
+        "inLanguage": "en"
+      }
+    </script>
   </head>
   <body>
+    <a class="skip-link" href="#app">Skip to calculator</a>
     <div id="app"></div>
+    <noscript>
+      <main style="max-width: 40rem; margin: 3rem auto; padding: 0 1.25rem; font-family: system-ui, sans-serif; line-height: 1.6; color: #c4cad6; background: #07080c">
+        <h1 style="color: #f2f4f8; font-weight: 600">What. The. Chmod.</h1>
+        <p>
+          A free <strong>Unix permissions calculator</strong> (chmod calculator) for converting
+          between octal modes like <code>755</code> / <code>644</code> and symbolic forms like
+          <code>rwxr-xr-x</code>.
+        </p>
+        <p>
+          Toggle user, group, and other read/write/execute bits, apply common presets, include
+          setuid / setgid / sticky bits, and copy a ready-to-run <code>chmod</code> command.
+        </p>
+        <p>
+          Enable JavaScript to use the interactive calculator at
+          <a href="https://whatthechmod.vercel.app/" style="color: #3dd68c">whatthechmod.vercel.app</a>.
+          Built by <a href="https://toddaustin.co" style="color: #3dd68c">toddaustin.co</a>.
+        </p>
+      </main>
+    </noscript>
     <script type="module" src="/src/main.js"></script>
   </body>
 </html>

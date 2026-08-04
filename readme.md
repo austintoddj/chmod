@@ -2,7 +2,7 @@
 
 A simple, beautiful Unix permissions calculator for that once-a-year occasion when you need to modify file access.
 
-**https://whatthechmod.com**
+**https://whatthechmod.vercel.app**
 
 ## Features
 

@@ -137,16 +137,17 @@ function render() {
           <div class="command-block">
             <div class="command-meta">
               <span class="stat-label">Command</span>
-              <label>
-                <span class="sr-only">Filename</span>
+              <label class="filename-label" for="filename-input">
+                <span class="filename-label-text">Target file</span>
                 <input
                   id="filename-input"
                   class="filename-input"
                   type="text"
                   value="${escapeAttr(state.filename)}"
+                  placeholder="filename"
                   spellcheck="false"
                   autocomplete="off"
-                  aria-label="Target filename"
+                  aria-label="Target filename for the chmod command"
                 />
               </label>
             </div>
@@ -204,9 +205,13 @@ function render() {
 
       <footer class="footer">
         <p>
-          <span class="footer-mark">whatthechmod.com</span>
+          <a class="footer-mark" href="https://whatthechmod.vercel.app/">whatthechmod.vercel.app</a>
           <span class="footer-sep" aria-hidden="true">·</span>
           <span>Permissions for humans</span>
+        </p>
+        <p class="footer-credit">
+          by
+          <a href="https://toddaustin.co" rel="author noopener noreferrer">toddaustin.co</a>
         </p>
       </footer>
     </div>

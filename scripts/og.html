@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+      }
+      body {
+        width: 1200px;
+        height: 630px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 72px 88px;
+        font-family:
+          Inter,
+          system-ui,
+          -apple-system,
+          sans-serif;
+        color: #c4cad6;
+        background:
+          radial-gradient(
+            900px 480px at 50% -15%,
+            rgba(61, 214, 140, 0.14),
+            transparent 55%
+          ),
+          radial-gradient(
+            700px 360px at 100% 0%,
+            rgba(100, 140, 255, 0.08),
+            transparent 50%
+          ),
+          #07080c;
+      }
+      .eyebrow {
+        font-size: 22px;
+        font-weight: 600;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: #5c6478;
+        margin-bottom: 28px;
+      }
+      h1 {
+        font-family: 'Instrument Serif', Georgia, serif;
+        font-size: 96px;
+        font-weight: 400;
+        line-height: 1.02;
+        letter-spacing: -0.02em;
+        color: #f2f4f8;
+        margin-bottom: 28px;
+      }
+      .lede {
+        max-width: 760px;
+        font-size: 28px;
+        line-height: 1.45;
+        color: #8b93a7;
+        margin-bottom: 48px;
+      }
+      .row {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+      }
+      .pill {
+        font-family: 'IBM Plex Mono', ui-monospace, monospace;
+        font-size: 22px;
+        font-weight: 600;
+        color: #3dd68c;
+        background: rgba(61, 214, 140, 0.12);
+        border: 1px solid rgba(61, 214, 140, 0.28);
+        border-radius: 999px;
+        padding: 10px 20px;
+      }
+      .domain {
+        font-size: 22px;
+        color: #5c6478;
+      }
+    </style>
+  </head>
+  <body>
+    <p class="eyebrow">Unix permissions calculator</p>
+    <h1>What. The. Chmod.</h1>
+    <p class="lede">
+      Toggle bits, type an octal, copy the command — for that once-a-year occasion.
+    </p>
+    <div class="row">
+      <span class="pill">chmod 755</span>
+      <span class="pill">rwxr-xr-x</span>
+      <span class="domain">whatthechmod.vercel.app</span>
+    </div>
+  </body>
+</html>
