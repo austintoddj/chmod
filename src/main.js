@@ -312,21 +312,25 @@ function bindEvents() {
     }
   })
 
-  app.addEventListener('blur', e => {
-    if (e.target.id === 'octal-input') {
-      state.octalDraft = null
-      updateUI()
-      return
-    }
-
-    if (e.target.id === 'filename-input') {
-      if (!state.filename.trim()) {
-        state.filename = 'filename'
-        e.target.value = state.filename
+  app.addEventListener(
+    'blur',
+    e => {
+      if (e.target.id === 'octal-input') {
+        state.octalDraft = null
+        updateUI()
+        return
       }
-      updateCommandOnly()
-    }
-  }, true)
+
+      if (e.target.id === 'filename-input') {
+        if (!state.filename.trim()) {
+          state.filename = 'filename'
+          e.target.value = state.filename
+        }
+        updateCommandOnly()
+      }
+    },
+    true
+  )
 
   app.addEventListener('keydown', e => {
     if (e.target.id === 'octal-input' && e.key === 'Enter') {
