@@ -25,7 +25,6 @@ updates:
     reviewers:
       - 'austintoddj'
     labels:
-      - 'npm'
       - 'dependencies'
     commit-message:
       prefix: 'chore(deps)'
