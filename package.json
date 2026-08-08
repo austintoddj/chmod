@@ -5,7 +5,7 @@
   "type": "module",
   "description": "A beautiful Unix permissions calculator for that once-a-year occasion when you need to modify file access.",
   "engines": {
-    "node": ">=20"
+    "node": "^20.19.0 || ^22.13.0 || >=24"
   },
   "scripts": {
     "dev": "vite",
@@ -22,18 +22,18 @@
     "preflight": "bash bin/preflight.sh"
   },
   "devDependencies": {
-    "@eslint/js": "^9.39.0",
-    "@types/node": "^26.1.2",
+    "@eslint/js": "^10.0.1",
+    "@types/node": "^26.2.0",
     "@vitest/coverage-v8": "^4.1.10",
-    "eslint": "^9.39.0",
+    "eslint": "^10.8.1",
     "eslint-config-prettier": "^10.1.8",
-    "globals": "^17.8.0",
-    "happy-dom": "^20.11.1",
-    "prettier": "^3.6.2",
-    "typescript": "npm:@typescript/typescript6@^6.0.0",
-    "typescript-7": "npm:typescript@^7",
-    "typescript-eslint": "^8.34.0",
-    "vite": "^8.2.0",
+    "globals": "^17.9.0",
+    "happy-dom": "^20.11.2",
+    "prettier": "^3.9.6",
+    "typescript": "npm:@typescript/typescript6@^6.0.2",
+    "typescript-7": "npm:typescript@^7.0.2",
+    "typescript-eslint": "^8.66.0",
+    "vite": "^8.2.1",
     "vitest": "^4.1.10"
   },
   "dependencies": {
