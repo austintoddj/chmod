@@ -27,7 +27,7 @@
     "@vitest/coverage-v8": "^4.1.10",
     "eslint": "^10.8.1",
     "eslint-config-prettier": "^10.1.8",
-    "globals": "^17.9.0",
+    "globals": "^17.11.0",
     "happy-dom": "^20.11.2",
     "prettier": "^3.9.6",
     "typescript": "npm:@typescript/typescript6@^6.0.2",
