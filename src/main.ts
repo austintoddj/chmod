@@ -227,7 +227,7 @@ function render(): void {
         </p>
         <p class="footer-credit">
           by
-          <a href="https://toddaustin.co" rel="author noopener noreferrer">toddaustin.co</a>
+          <a href="https://x.com/austintoddj" target="_blank" rel="noopener noreferrer">Todd Austin</a>
         </p>
       </footer>
     </div>
