@@ -20,6 +20,18 @@ describe('calculator UI', () => {
     expect(document.querySelector('.cmd-mode')?.textContent).toBe('755')
   })
 
+  it('credits the footer design to georgetownweb.co', () => {
+    const credit = document.querySelector('.footer-credit')
+    const designLink = document.querySelector<HTMLAnchorElement>(
+      '.footer-credit a[href="https://georgetownweb.co"]'
+    )
+
+    expect(credit?.textContent).toMatch(/Design by/)
+    expect(designLink).toBeTruthy()
+    expect(designLink?.textContent).toBe('georgetownweb.co')
+    expect(designLink?.rel).toContain('noopener')
+  })
+
   it('toggles a permission bit and updates the octal', () => {
     const otherWrite = document.querySelector<HTMLButtonElement>('#other-write')
     expect(otherWrite?.getAttribute('aria-checked')).toBe('false')

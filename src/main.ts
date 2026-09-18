@@ -226,8 +226,8 @@ function render(): void {
           <span>Permissions for humans</span>
         </p>
         <p class="footer-credit">
-          by
-          <a href="https://x.com/austintoddj" target="_blank" rel="noopener noreferrer">Todd Austin</a>
+          Design by
+          <a href="https://georgetownweb.co" target="_blank" rel="noopener noreferrer">georgetownweb.co</a>
         </p>
       </footer>
     </div>
