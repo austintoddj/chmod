@@ -51,6 +51,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v7
         with:
+          retention-days: 3
           name: coverage
           path: coverage/
           if-no-files-found: ignore
