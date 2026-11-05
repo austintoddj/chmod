@@ -6,7 +6,7 @@ test('home renders the calculator', async ({ page }) => {
     page.getByRole('heading', { name: 'What. The. Chmod.' })
   ).toBeVisible()
   await expect(page.locator('#octal-input')).toHaveValue('755')
-  await expect(page.getByRole('button', { name: '755' })).toBeVisible()
+  await expect(page.getByRole('listitem', { name: /755/ })).toBeVisible()
   await expect(
     page.getByRole('button', { name: 'Copy chmod command' })
   ).toBeVisible()
