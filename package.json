@@ -5,11 +5,12 @@
   "type": "module",
   "description": "A beautiful Unix permissions calculator for that once-a-year occasion when you need to modify file access.",
   "engines": {
-    "node": "^20.19.0 || ^22.13.0 || >=24"
+    "node": "24.x"
   },
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "start": "vite preview --host localhost --port 3000 --strictPort",
     "preview": "vite preview",
     "lint": "eslint .",
     "format": "prettier --write .",
@@ -17,12 +18,15 @@
     "typecheck": "node node_modules/typescript-7/bin/tsc --noEmit",
     "test": "vitest run",
     "test:unit": "vitest run",
+    "e2e": "playwright test --project=chromium",
+    "check": "npm run typecheck && npm run lint && npm test",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
     "preflight": "bash bin/preflight.sh"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
+    "@playwright/test": "^1.64.1",
     "@types/node": "^26.6.6",
     "@vitest/coverage-v8": "^5.0.5",
     "eslint": "^10.8.1",
