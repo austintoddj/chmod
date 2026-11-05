@@ -1,49 +1,27 @@
 version: 2
 updates:
-  - package-ecosystem: 'github-actions'
-    directory: '/'
+  - package-ecosystem: npm
+    directory: /
     schedule:
-      interval: 'weekly'
-      day: 'monday'
-      time: '06:00'
-      timezone: 'America/Chicago'
+      interval: weekly
     cooldown:
       default-days: 5
     groups:
-      weekly-patch-minor:
-        applies-to: 'version-updates'
-        patterns:
-          - '*'
-        update-types:
-          - 'minor'
-          - 'patch'
-    reviewers:
-      - 'austintoddj'
-    labels:
-      - 'dependencies'
-    commit-message:
-      prefix: 'chore(deps)'
+      minor-and-patch:
+        patterns: ['*']
+        update-types: [minor, patch]
+      major:
+        patterns: ['*']
+        update-types: [major]
+    # ignore:
+    #   - dependency-name: "<package>"
+    #     update-types: ["version-update:semver-major"]
+    #     # Reason: <why the toolchain can't run it yet>
 
-  - package-ecosystem: 'npm'
-    directory: '/'
+  - package-ecosystem: github-actions
+    directory: /
     schedule:
-      interval: 'weekly'
-      day: 'monday'
-      time: '06:00'
-      timezone: 'America/Chicago'
-    cooldown:
-      default-days: 5
+      interval: weekly
     groups:
-      weekly-patch-minor:
-        applies-to: 'version-updates'
-        patterns:
-          - '*'
-        update-types:
-          - 'minor'
-          - 'patch'
-    reviewers:
-      - 'austintoddj'
-    labels:
-      - 'dependencies'
-    commit-message:
-      prefix: 'chore(deps)'
+      actions:
+        patterns: ['*']
