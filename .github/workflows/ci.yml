@@ -27,12 +27,7 @@ jobs:
       - run: npm ci
       - name: Dummy env (never real secrets)
         run: if [ -f .env.ci ]; then cp .env.ci .env.production.local; fi
-      - run: npm run typecheck
-      - run: npm run lint
-      - run: npm test
-      - run: npm run build
-      - run: npx playwright install --with-deps chromium
-      - run: npm run e2e
+      - run: npm run ci
       - name: Upload report
         if: failure()
         continue-on-error: true
