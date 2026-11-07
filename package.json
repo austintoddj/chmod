@@ -20,6 +20,7 @@
     "test:unit": "vitest run",
     "e2e": "playwright test --project=chromium",
     "check": "npm run typecheck && npm run lint && npm test",
+    "ci": "bash bin/ci.sh",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
     "preflight": "bash bin/preflight.sh"

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Pre-commit checklist: lint/format, typecheck, unit tests, and build.
+# Local run of the CI checks.
 #
 # Usage:
 #   bin/preflight.sh
@@ -11,33 +11,16 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "${ROOT}"
 
-step() {
-  echo ""
-  echo "==> $*"
-}
-
-# Dependency upgrades are intentional (Dependabot / manual), not part of preflight.
-step "npm ci (or skip if node_modules present)"
 if [[ ! -d node_modules ]]; then
+  echo ""
+  echo "==> npm ci"
   npm ci
-else
-  echo "node_modules present — skipping install"
 fi
 
-step "npm run lint"
-npm run lint
+if [[ -f .env.ci && ! -f .env.production.local ]]; then
+  echo ""
+  echo "==> .env.ci -> .env.production.local"
+  cp .env.ci .env.production.local
+fi
 
-step "npm run format"
-npm run format
-
-step "npm run typecheck"
-npm run typecheck
-
-step "npm run test:unit"
-npm run test:unit
-
-step "npm run build"
-npm run build
-
-echo ""
-echo "==> Preflight complete. Review the diff, then commit."
+exec "${ROOT}/bin/ci.sh"
